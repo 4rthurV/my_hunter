@@ -54,6 +54,9 @@ void check_music(game_t *game, sprite_t *sprite)
         }
         if (sfMusic_getStatus(game->loose) != sfPlaying)
             sfMusic_stop(game->music);
-    } else if (game->state == 1 && sfMusic_getStatus(game->music) != sfPlaying)
+    } else if (game->state == 1 &&
+        sfMusic_getStatus(game->music) != sfPlaying) {
+        sfMusic_stop(game->loose);
         sfMusic_play(game->music);
+    }
 }

@@ -21,6 +21,7 @@ void two_lifes(game_t *game, sprite_t *sprite)
             sfTexture_createFromFile("graphics/2_lifes.png", NULL);
         sprite->life_bar = sfSprite_create();
         get_lifes(sprite);
+        sfRenderWindow_drawSprite(game->window, sprite->life_bar, NULL);
     }
 }
 
@@ -31,6 +32,7 @@ void one_life(game_t *game, sprite_t *sprite)
             sfTexture_createFromFile("graphics/1_life.png", NULL);
         sprite->life_bar = sfSprite_create();
         get_lifes(sprite);
+        sfRenderWindow_drawSprite(game->window, sprite->life_bar, NULL);
     }
 }
 
@@ -41,6 +43,7 @@ void no_more_life(game_t *game, sprite_t *sprite)
             sfTexture_createFromFile("graphics/game_over.png", NULL);
         sprite->life_bar = sfSprite_create();
         get_lifes(sprite);
+        sfRenderWindow_drawSprite(game->window, sprite->life_bar, NULL);
     }
 }
 
@@ -52,5 +55,4 @@ void one_ups(game_t *game, sprite_t *sprite)
     two_lifes(game, sprite);
     one_life(game, sprite);
     no_more_life(game, sprite);
-    sfRenderWindow_drawSprite(game->window, sprite->life_bar, NULL);
 }

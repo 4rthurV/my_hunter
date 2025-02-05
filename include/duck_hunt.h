@@ -13,6 +13,7 @@
     #include <SFML/Window.h>
     #include <stdlib.h>
     #include <stdio.h>
+    #include <unistd.h>
     #include <time.h>
 
 typedef struct game_s {
@@ -62,6 +63,7 @@ void get_lifes(sprite_t *sprite);
 void one_ups(game_t *game, sprite_t *sprite);
 void check_music(game_t *game, sprite_t *sprite);
 void loop(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button);
+void restart_data(game_t *game, sprite_t *sprite);
 void animate_sprite(sprite_t *sprite);
 void animate_playbutton(game_t *game, mouse_t *mouse, button_t *button);
 void animate_menubutton(game_t *game, mouse_t *mouse, button_t *button);
@@ -72,7 +74,7 @@ int sprite_isclicked(game_t *game, sprite_t *sprite, int *clicked);
 int playbutton_isclicked(game_t *game, button_t *button,
     int *playbutton_clicked);
 int menubutton_isclicked(game_t *game, button_t *button,
-    int *menubutton_clicked);
+    sprite_t *sprite, int *button_clicked);
 int quitbutton_isclicked(game_t *game, button_t *button,
     int *button_clicked);
 int display_menu(game_t *game, mouse_t *mouse,
@@ -91,4 +93,8 @@ void from_play_to_menu(game_t *game, sprite_t *sprite,
     mouse_t *mouse, button_t *button);
 void process_events(game_t *game);
 void clean(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button);
+int my_strcmp(char const *s1, char const *s2);
+int my_putstr(char const *str);
+void my_putchar(char c);
+int my_strlen(char const *str);
 #endif
