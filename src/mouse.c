@@ -7,7 +7,8 @@
 
 #include "../include/duck_hunt.h"
 
-int sprite_isclicked(game_t *game, sprite_t *sprite, int *sprite_clicked)
+int sprite_isclicked(game_t *game, sprite_t *sprite,
+    button_t *button, int *sprite_clicked)
 {
     sfFloatRect spriteBounds = sfSprite_getGlobalBounds(sprite->sprite);
 
@@ -17,7 +18,8 @@ int sprite_isclicked(game_t *game, sprite_t *sprite, int *sprite_clicked)
         game->event.mouseButton.x, game->event.mouseButton.y)) {
             game->count_hits += 1;
             *sprite_clicked = 1;
-            sfMusic_play(game->coin);
+            game->sound_coin = 1;
+            check_music(game, button);
         }
     return *sprite_clicked;
 }

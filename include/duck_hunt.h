@@ -29,6 +29,7 @@ typedef struct game_s {
     int state;
     int count_hits;
     int race_started;
+    int sound_coin;
 } game_t;
 typedef struct button_s {
     sfTexture* playbutton;
@@ -58,10 +59,12 @@ void loop(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button);
 void animate_sprite(sprite_t *sprite);
 void animate_playbutton(game_t *game, mouse_t *mouse, button_t *button);
 void animate_menubutton(game_t *game, mouse_t *mouse, button_t *button);
-int update_pos(game_t *game, sprite_t *sprite, float *speed);
+int update_pos(game_t *game, sprite_t *sprite,
+    button_t *button, float *speed);
 void which_sprite(sprite_t *sprite, float *y_pos);
 void tracer(game_t *game, mouse_t *mouse);
-int sprite_isclicked(game_t *game, sprite_t *sprite, int *clicked);
+int sprite_isclicked(game_t *game, sprite_t *sprite,
+    button_t *button, int *clicked);
 int playbutton_isclicked(game_t *game, button_t *button,
     int *playbutton_clicked);
 int menubutton_isclicked(game_t *game, button_t *button,
