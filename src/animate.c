@@ -23,14 +23,14 @@ void animate_clickedplay(game_t *game, mouse_t *mouse, button_t *button)
     sfTexture_createFromFile("graphics/clicked_playbutton.png", NULL);
 
     sfSprite_setTexture(button->play, clickedTexture, sfTrue);
-    draw(game, mouse, button);
+    draw_menu(game, mouse, button);
 }
 
 static void animate_clickedplay2(game_t *game,
     mouse_t *mouse, button_t *button)
 {
     sfSprite_setTexture(button->play, button->playbutton, sfTrue);
-    draw(game, mouse, button);
+    draw_menu(game, mouse, button);
 }
 
 void animate_playbutton(game_t *game, mouse_t *mouse, button_t *button)
@@ -51,14 +51,14 @@ static void animate_clickedmenu(game_t *game,
     sfTexture_createFromFile("graphics/clicked_menubutton.png", NULL);
 
     sfSprite_setTexture(button->menu, clickedTexture, sfTrue);
-    draw(game, mouse, button);
+    draw_menu(game, mouse, button);
 }
 
 static void animate_clickedmenu2(game_t *game,
     mouse_t *mouse, button_t *button)
 {
     sfSprite_setTexture(button->menu, button->menubutton, sfTrue);
-    draw(game, mouse, button);
+    draw_menu(game, mouse, button);
 }
 
 void animate_menubutton(game_t *game, mouse_t *mouse, button_t *button)

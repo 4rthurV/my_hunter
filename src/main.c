@@ -12,6 +12,7 @@ void restart_data(game_t *game, sprite_t *sprite)
     game->state = 0;
     game->sound->sound_coin = 1;
     game->lifes = 3;
+    game->count_hits = 0;
     sprite->one_ups =
         sfTexture_createFromFile("graphics/3_lifes.png", NULL);
     sprite->life_bar = sfSprite_create();
@@ -20,6 +21,7 @@ void restart_data(game_t *game, sprite_t *sprite)
 void restart_loop(game_t *game, sprite_t *sprite,
     mouse_t *mouse, button_t *button)
 {
+    display_score(game);
     check_music(game, sprite);
     sfSprite_destroy(sprite->life_bar);
     sfTexture_destroy(sprite->one_ups);
@@ -64,12 +66,14 @@ static void get_all(game_t *game, sprite_t *sprite,
     get_playbutton(button);
     get_menubutton(button);
     get_sounds(game);
+    get_score(game);
 }
 
 void set(game_t *game, button_t *button)
 {
     game->state = 0;
     game->lifes = 3;
+    game->final_score = 0;
     game->sound = malloc(sizeof(sound_t));
     game->race_started = 0;
     game->sound->sound_coin = 0;

@@ -7,10 +7,15 @@
 
 #include "../include/duck_hunt.h"
 
-void draw(game_t *game, mouse_t *mouse, button_t *button)
+void draw_menu(game_t *game, mouse_t *mouse, button_t *button)
 {
     sfRenderWindow_clear(game->window, sfBlack);
     sfRenderWindow_drawSprite(game->window, game->image, NULL);
+    if (game->final_score == 1) {
+        sfText_setPosition(game->text, (sfVector2f){595.0, 480.0});
+        sfText_setColor(game->text, sfWhite);
+        sfRenderWindow_drawText(game->window, game->text, NULL);
+    }
     sfRenderWindow_drawSprite(game->window, button->play, NULL);
     sfRenderWindow_drawSprite(game->window, button->menu, NULL);
     sfRenderWindow_drawSprite(game->window, mouse->mouse, NULL);
@@ -29,7 +34,7 @@ int display_menu(game_t *game, mouse_t *mouse,
     game->image = sfSprite_create();
     sfSprite_setTexture(game->image, game->background, sfTrue);
     sfSprite_setScale(game->image, (sfVector2f){1.95f, 1.9f});
-    draw(game, mouse, button);
+    draw_menu(game, mouse, button);
     sprite->sprite_position.x = -200.0f;
     if (playbutton_isclicked(game, button, &playbutton_clicked) == 1) {
         click_play(game, mouse, button);
@@ -50,6 +55,20 @@ void from_play_to_menu(game_t *game, sprite_t *sprite,
     display_menu(game, mouse, sprite, button);
 }
 
+void draw_game(game_t *game, sprite_t *sprite,
+    mouse_t *mouse, button_t *button)
+{
+    sfRenderWindow_drawSprite(game->window, game->image, NULL);
+    display_score(game);
+    sfRenderWindow_drawSprite(game->window, sprite->sprite, NULL);
+    sfRenderWindow_drawSprite(game->window, sprite->life_bar, NULL);
+    sfRenderWindow_drawSprite(game->window, button->menu, NULL);
+    sfRenderWindow_drawSprite(game->window, mouse->mouse, NULL);
+    sfRenderWindow_display(game->window);
+    sfRenderWindow_drawSprite(game->window, sprite->sprite, NULL);
+    game->final_score = 0;
+}
+
 int display_game(game_t *game, mouse_t *mouse,
     sprite_t *sprite, button_t *button)
 {
@@ -61,13 +80,7 @@ int display_game(game_t *game, mouse_t *mouse,
     game->image = sfSprite_create();
     sfSprite_setTexture(game->image, game->background, sfTrue);
     sfSprite_setScale(game->image, (sfVector2f){8.0f, 8.0f});
-    sfRenderWindow_drawSprite(game->window, game->image, NULL);
-    sfRenderWindow_drawSprite(game->window, sprite->sprite, NULL);
-    sfRenderWindow_drawSprite(game->window, sprite->life_bar, NULL);
-    sfRenderWindow_drawSprite(game->window, button->menu, NULL);
-    sfRenderWindow_drawSprite(game->window, mouse->mouse, NULL);
-    sfRenderWindow_display(game->window);
-    sfRenderWindow_drawSprite(game->window, sprite->sprite, NULL);
+    draw_game(game, sprite, mouse, button);
     if (quitbutton_isclicked(game, button, &quitbutton_clicked) == 1) {
         from_play_to_menu(game, sprite, mouse, button);
         return 1;
