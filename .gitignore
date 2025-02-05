@@ -2,3 +2,5 @@
 *~
 *.png
 run
+*.json
+*.vscode
