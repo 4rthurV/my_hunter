@@ -22,7 +22,7 @@ static void process_events(game_t *game)
 void restart_loop(game_t *game, sprite_t *sprite,
     mouse_t *mouse, button_t *button)
 {
-    sfMusic_stop(game->music);
+    check_music(game, button);
     game->state = 0;
     game->count_fails = 0;
     loop(game, sprite, mouse, button);
@@ -36,19 +36,18 @@ void loop(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button)
         process_events(game);
         tracer(game, mouse);
         if (game->state == 0) {
-            check_music(game);
+            check_music(game, button);
             menu_state(game, mouse, sprite, button);
         }
         if (game->state == 1) {
-            check_music(game);
+            check_music(game, button);
             play_state(game, mouse, sprite, button);
         }
         if (update_pos(game, sprite, &speed) == 0)
             break;
     }
-    if (update_pos(game, sprite, &speed) == 0) {
+    if (update_pos(game, sprite, &speed) == 0)
         restart_loop(game, sprite, mouse, button);
-    }
 }
 
 void get_all(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button)
@@ -77,6 +76,7 @@ int main(void)
     game->state = 0;
     game->count_fails = 0;
     game->race_started = 0;
+    button->menu_button_clicked = 0;
     get_all(game, sprite, mouse, button);
     loop(game, sprite, mouse, button);
     clean(game, sprite, mouse, button);

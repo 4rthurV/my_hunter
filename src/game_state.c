@@ -12,6 +12,7 @@ void menu_state(game_t *game, mouse_t *mouse,
 {
     int menu_result = display_menu(game, mouse, sprite, button);
 
+    button->menu_button_clicked = 0;
     if (menu_result == 1)
         game->state = 1;
     else if (menu_result == 2)

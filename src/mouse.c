@@ -17,6 +17,7 @@ int sprite_isclicked(game_t *game, sprite_t *sprite, int *sprite_clicked)
         game->event.mouseButton.x, game->event.mouseButton.y)) {
             game->count_hits += 1;
             *sprite_clicked = 1;
+            sfMusic_play(game->coin);
         }
     return *sprite_clicked;
 }
@@ -51,8 +52,10 @@ int quitbutton_isclicked(game_t *game, button_t *button,
     if (game->event.type == sfEvtMouseButtonPressed &&
         game->event.mouseButton.button == sfMouseLeft &&
         sfFloatRect_contains(&spriteBounds,
-        game->event.mouseButton.x, game->event.mouseButton.y))
+        game->event.mouseButton.x, game->event.mouseButton.y)) {
+            button->menu_button_clicked = 1;
             *quitbutton_clicked = 1;
+    }
     return *quitbutton_clicked;
 }
 

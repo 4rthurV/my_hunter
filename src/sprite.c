@@ -7,6 +7,24 @@
 
 #include "../include/duck_hunt.h"
 
+void which_sprite(sprite_t *sprite, float *y_pos)
+{
+    sfIntRect rect = {0, 0, 321, 349};
+
+    sprite->sprite_position = (sfVector2f){-150.0f, *y_pos};
+    if (*y_pos > 540.0f) {
+        sfTexture_destroy(sprite->texture);
+        sprite->texture =
+            sfTexture_createFromFile("graphics/spritesheet_mario.png", NULL);
+    } else {
+        sfTexture_destroy(sprite->texture);
+        sprite->texture =
+            sfTexture_createFromFile("graphics/lakitu.png", NULL);
+    }
+    sfSprite_setTexture(sprite->sprite, sprite->texture, sfTrue);
+    sfSprite_setTextureRect(sprite->sprite, rect);
+}
+
 int update_pos(game_t *game, sprite_t *sprite, float *speed)
 {
     int y_max = 0;
@@ -22,8 +40,8 @@ int update_pos(game_t *game, sprite_t *sprite, float *speed)
         game->count_fails += 1;
     if (sprite->sprite_position.x > 1920 || clicked == 1) {
         clicked = 0;
-        sprite->sprite_position = (sfVector2f){-150.0f, y_pos};
         *speed += 0.3;
+        which_sprite(sprite, &y_pos);
     }
     if (game->count_fails == 3)
         return 0;

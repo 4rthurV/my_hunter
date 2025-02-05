@@ -23,6 +23,8 @@ typedef struct game_s {
     sfEvent event;
     sfClock* clock;
     sfMusic* music;
+    sfMusic* loose;
+    sfMusic* coin;
     int count_fails;
     int state;
     int count_hits;
@@ -33,6 +35,7 @@ typedef struct button_s {
     sfSprite* play;
     sfTexture* menubutton;
     sfSprite* menu;
+    int menu_button_clicked;
 } button_t;
 typedef struct sprite_s {
     sfTexture* texture;
@@ -50,12 +53,13 @@ void get_mouse(game_t *game, mouse_t *mouse);
 void get_playbutton(button_t *button);
 void get_menubutton(button_t *button);
 void get_sounds(game_t *game);
-void check_music(game_t *game);
+void check_music(game_t *game, button_t *button);
 void loop(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button);
 void animate_sprite(sprite_t *sprite);
 void animate_playbutton(game_t *game, mouse_t *mouse, button_t *button);
 void animate_menubutton(game_t *game, mouse_t *mouse, button_t *button);
 int update_pos(game_t *game, sprite_t *sprite, float *speed);
+void which_sprite(sprite_t *sprite, float *y_pos);
 void tracer(game_t *game, mouse_t *mouse);
 int sprite_isclicked(game_t *game, sprite_t *sprite, int *clicked);
 int playbutton_isclicked(game_t *game, button_t *button,

@@ -30,7 +30,7 @@ void get_sprite(sprite_t *sprite)
     sfSprite_setTexture(sprite->sprite, sprite->texture, sfTrue);
     sfSprite_setTextureRect(sprite->sprite, rect);
     sfSprite_setScale(sprite->sprite, (sfVector2f){0.3f, 0.3f});
-    sprite->sprite_position = (sfVector2f){-200.0f, y_pos};
+    sprite->sprite_position = (sfVector2f){-150.0f, y_pos};
     sfSprite_setPosition(sprite->sprite, sprite->sprite_position);
 }
 
