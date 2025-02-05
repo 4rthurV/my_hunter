@@ -43,8 +43,8 @@ void click_play(game_t *game, mouse_t *mouse, button_t *button)
     sfTexture_destroy(clickedTexture);
 }
 
-int menubutton_isclicked(game_t *game, button_t *button,
-    int *menubutton_clicked)
+int quitbutton_isclicked(game_t *game, button_t *button,
+    int *quitbutton_clicked)
 {
     sfFloatRect spriteBounds = sfSprite_getGlobalBounds(button->menu);
 
@@ -52,11 +52,11 @@ int menubutton_isclicked(game_t *game, button_t *button,
         game->event.mouseButton.button == sfMouseLeft &&
         sfFloatRect_contains(&spriteBounds,
         game->event.mouseButton.x, game->event.mouseButton.y))
-            *menubutton_clicked = 1;
-    return *menubutton_clicked;
+            *quitbutton_clicked = 1;
+    return *quitbutton_clicked;
 }
 
-void click_menu(game_t *game, mouse_t *mouse, button_t *button)
+void click_quit(game_t *game, mouse_t *mouse, button_t *button)
 {
     sfTexture *clickedTexture =
     sfTexture_createFromFile("graphics/clicked_menubutton.png", NULL);
