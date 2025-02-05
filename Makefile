@@ -7,10 +7,13 @@
 
 SRC	=	src/main.c \
 		src/get_ressources.c \
+		src/mouse.c \
+		src/sprite.c \
+		src/display.c \
 
 OBJ	=	$(SRC:.c=.o)
 
-EXE_NAME	=	duck_hunt
+EXE_NAME	=	my_hunter
 
 CFLAGS	+=	-Wall -Wextra -lcsfml-graphics -lcsfml-window -lcsfml-system
 
@@ -19,11 +22,11 @@ all:	$(EXE_NAME)
 $(EXE_NAME): $(OBJ)
 	gcc -o $(EXE_NAME) $(OBJ) $(CFLAGS)
 
-clean :
+clean:
 	rm -f $(OBJ)
 
-fclean :
+fclean:
 	rm -f $(EXE_NAME)
 	rm -f src/*.o
 
-re : fclean all
+re:	fclean all
