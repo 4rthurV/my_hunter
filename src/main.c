@@ -54,7 +54,7 @@ int main(void)
     mouse_t *mouse = malloc(sizeof(mouse_t));
     button_t *button = malloc(sizeof(button_t));
 
-    game->music = sfMusic_createFromFile("audios/CoconutMall.wav");
+    game->music = sfMusic_createFromFile("audios/CoconutMall 8bit.wav");
     if (!game || !sprite || !mouse || !button || !game->music)
         return 84;
     sfMusic_setLoop(game->music, sfTrue);
