@@ -7,16 +7,6 @@
 
 #include "../include/duck_hunt.h"
 
-void animate_sprite(sprite_t *sprite)
-{
-    sfIntRect area = sfSprite_getTextureRect(sprite->sprite);
-
-    area.left = (area.left + 321);
-    if (area.left > 642)
-        area.left = 0;
-    sfSprite_setTextureRect(sprite->sprite, area);
-}
-
 int update_pos(game_t *game, sprite_t *sprite, float *speed)
 {
     int y_max = 0;
