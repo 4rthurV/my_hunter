@@ -25,6 +25,7 @@ void clean(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button)
     sfTexture_destroy(mouse->target);
     sfSprite_destroy(game->image);
     sfTexture_destroy(game->background);
+    sfClock_destroy(game->clock);
     sfRenderWindow_destroy(game->window);
     free(game);
     free(sprite);
@@ -35,24 +36,27 @@ void clean(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button)
 void menu_state(game_t *game, mouse_t *mouse,
     sprite_t *sprite, button_t *button)
 {
-    display_menu(game, mouse, sprite, button);
     if (display_menu(game, mouse, sprite, button) == 1)
         game->state = 1;
 }
 
-void play_state(game_t *game, mouse_t *mouse, sprite_t *sprite, int *frame)
+void play_state(game_t *game, mouse_t *mouse, sprite_t *sprite)
 {
-    int animation_framerate = 10;
+    float animation_delay = 0.35;
+    sfTime elapsed;
+    float elapsed_seconds;
 
     display_game(game, mouse, sprite);
-    if (*frame == 0)
+    elapsed = sfClock_getElapsedTime(game->clock);
+    elapsed_seconds = sfTime_asSeconds(elapsed);
+    if (elapsed_seconds > animation_delay) {
         animate_sprite(sprite);
-    *frame = (*frame + 1) % animation_framerate;
+        sfClock_restart(game->clock);
+    }
 }
 
 void loop(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button)
 {
-    int frame = 0;
     float speed = 7.0f;
 
     game->state = 0;
@@ -63,7 +67,7 @@ void loop(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button)
         if (game->state == 0) {
             menu_state(game, mouse, sprite, button);
         } else
-            play_state(game, mouse, sprite, &frame);
+            play_state(game, mouse, sprite);
         if (update_pos(game, sprite, &speed) == 0)
             break;
     }

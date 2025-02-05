@@ -17,17 +17,40 @@ void tracer(game_t *game, mouse_t *mouse)
         / 2)});
 }
 
-int mouse_isclicked(game_t *game, sprite_t *sprite, int *clicked)
+int sprite_isclicked(game_t *game, sprite_t *sprite, int *sprite_clicked)
 {
     sfFloatRect spriteBounds = sfSprite_getGlobalBounds(sprite->sprite);
-    int hits = 0;
 
     if (game->event.type == sfEvtMouseButtonPressed &&
         game->event.mouseButton.button == sfMouseLeft &&
         sfFloatRect_contains(&spriteBounds,
         game->event.mouseButton.x, game->event.mouseButton.y)) {
-            *clicked = 1;
-            printf("hits : %d\n", hits);
-    }
-    return *clicked;
+            game->count_hits += 1;
+            *sprite_clicked = 1;
+        }
+    return *sprite_clicked;
+}
+
+int playbutton_isclicked(game_t *game, button_t *button,
+    int *playbutton_clicked)
+{
+    sfFloatRect spriteBounds = sfSprite_getGlobalBounds(button->play);
+
+    if (game->event.type == sfEvtMouseButtonPressed &&
+        game->event.mouseButton.button == sfMouseLeft &&
+        sfFloatRect_contains(&spriteBounds,
+        game->event.mouseButton.x, game->event.mouseButton.y))
+            *playbutton_clicked = 1;
+    return *playbutton_clicked;
+}
+
+void click_play(game_t *game, mouse_t *mouse, button_t *button)
+{
+    sfClock *clock = sfClock_create();
+    sfTexture *clickedTexture =
+    sfTexture_createFromFile("graphics/clicked_playbutton.png", NULL);
+
+    animate_playbutton(game, mouse, button);
+    sfTexture_destroy(clickedTexture);
+    sfClock_destroy(clock);
 }
