@@ -16,7 +16,6 @@ void menu_state(game_t *game, mouse_t *mouse,
     if (menu_result == 1)
         game->state = 1;
     else if (menu_result == 2) {
-        one_ups(game, sprite);
         game->state = 2;
     }
 }

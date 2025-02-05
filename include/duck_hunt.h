@@ -27,6 +27,7 @@ typedef struct game_s {
     sfMusic* loose;
     sfMusic* coin;
     sfMusic* koopa;
+    sfMusic* OneUp;
     int lifes;
     int state;
     int count_hits;
@@ -60,7 +61,8 @@ void get_playbutton(button_t *button);
 void get_menubutton(button_t *button);
 void get_sounds(game_t *game);
 void get_lifes(sprite_t *sprite);
-void one_ups(game_t *game, sprite_t *sprite);
+void one_up(game_t *game, sprite_t *sprite);
+void loose_OneUp(game_t *game);
 void check_music(game_t *game, sprite_t *sprite);
 void loop(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button);
 void restart_data(game_t *game, sprite_t *sprite);

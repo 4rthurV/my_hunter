@@ -13,9 +13,11 @@ void get_sounds(game_t *game)
     game->loose = sfMusic_createFromFile("audios/Loose.wav");
     game->coin = sfMusic_createFromFile("audios/coin.ogg");
     game->koopa = sfMusic_createFromFile("audios/koopa.ogg");
+    game->OneUp = sfMusic_createFromFile("audios/loose_life.ogg");
     sfMusic_setVolume(game->music, 40);
     sfMusic_setVolume(game->loose, 50);
     sfMusic_setVolume(game->coin, 40);
+    sfMusic_setVolume(game->OneUp, 40);
     sfMusic_setVolume(game->koopa, 100);
 }
 
@@ -40,6 +42,13 @@ void sound_click(game_t *game, sprite_t *sprite)
     }
 }
 
+void loose_one_up(game_t *game)
+{
+    if (sfMusic_getStatus(game->OneUp) == sfPlaying)
+        sfMusic_stop(game->OneUp);
+    sfMusic_play(game->OneUp);
+}
+
 void check_music(game_t *game, sprite_t *sprite)
 {
     sound_click(game, sprite);
@@ -51,6 +60,7 @@ void check_music(game_t *game, sprite_t *sprite)
             sfMusic_play(game->loose);
             game->game_over = 0;
             sfMusic_setPlayingOffset(game->loose, sfSeconds(0));
+            sfMusic_setPlayingOffset(game->OneUp, sfSeconds(0));
         }
         if (sfMusic_getStatus(game->loose) != sfPlaying)
             sfMusic_stop(game->music);

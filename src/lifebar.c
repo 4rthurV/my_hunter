@@ -17,6 +17,8 @@ void get_lifes(sprite_t *sprite)
 void two_lifes(game_t *game, sprite_t *sprite)
 {
     if (game->lifes == 2) {
+        sfMusic_stop(game->OneUp);
+        sfMusic_play(game->OneUp);
         sprite->one_ups =
             sfTexture_createFromFile("graphics/2_lifes.png", NULL);
         sprite->life_bar = sfSprite_create();
@@ -28,6 +30,8 @@ void two_lifes(game_t *game, sprite_t *sprite)
 void one_life(game_t *game, sprite_t *sprite)
 {
     if (game->lifes == 1) {
+        sfMusic_stop(game->OneUp);
+        sfMusic_play(game->OneUp);
         sprite->one_ups =
             sfTexture_createFromFile("graphics/1_life.png", NULL);
         sprite->life_bar = sfSprite_create();
@@ -47,7 +51,7 @@ void no_more_life(game_t *game, sprite_t *sprite)
     }
 }
 
-void one_ups(game_t *game, sprite_t *sprite)
+void one_up(game_t *game, sprite_t *sprite)
 {
     game->lifes -= 1;
     sfSprite_destroy(sprite->life_bar);
