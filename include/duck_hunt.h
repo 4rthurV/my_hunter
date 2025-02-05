@@ -49,16 +49,20 @@ void get_playbutton(button_t *button);
 void get_menubutton(button_t *button);
 void animate_sprite(sprite_t *sprite);
 void animate_playbutton(game_t *game, mouse_t *mouse, button_t *button);
+void animate_menubutton(game_t *game, mouse_t *mouse, button_t *button);
 int update_pos(game_t *game, sprite_t *sprite, float *speed);
 void tracer(game_t *game, mouse_t *mouse);
 int sprite_isclicked(game_t *game, sprite_t *sprite, int *clicked);
 int playbutton_isclicked(game_t *game, button_t *button,
     int *playbutton_clicked);
+int menubutton_isclicked(game_t *game, button_t *button,
+    int *menubutton_clicked);
 int display_menu(game_t *game, mouse_t *mouse,
     sprite_t *sprite, button_t *button);
 void display_game(game_t *game, mouse_t *mouse, sprite_t *sprite);
 void draw(game_t *game, mouse_t *mouse, button_t *button);
 void click_play(game_t *game, mouse_t *mouse, button_t *button);
+void click_menu(game_t *game, mouse_t *mouse, button_t *button);
 void menu_state(game_t *game, mouse_t *mouse,
     sprite_t *sprite, button_t *button);
 void play_state(game_t *game, mouse_t *mouse, sprite_t *sprite);

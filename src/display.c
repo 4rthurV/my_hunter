@@ -21,6 +21,7 @@ int display_menu(game_t *game, mouse_t *mouse,
     sprite_t *sprite, button_t *button)
 {
     int playbutton_clicked = 0;
+    int menubutton_clicked = 0;
 
     game->background =
         sfTexture_createFromFile("graphics/starting_screen.png", NULL);
@@ -32,7 +33,11 @@ int display_menu(game_t *game, mouse_t *mouse,
     if (playbutton_isclicked(game, button, &playbutton_clicked) == 1) {
         click_play(game, mouse, button);
         return 1;
-        }
+    }
+    if (menubutton_isclicked(game, button, &menubutton_clicked) == 1) {
+        click_menu(game, mouse, button);
+        return 2;
+    }
     return 0;
 }
 

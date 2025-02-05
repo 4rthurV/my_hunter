@@ -42,3 +42,25 @@ void click_play(game_t *game, mouse_t *mouse, button_t *button)
     animate_playbutton(game, mouse, button);
     sfTexture_destroy(clickedTexture);
 }
+
+int menubutton_isclicked(game_t *game, button_t *button,
+    int *menubutton_clicked)
+{
+    sfFloatRect spriteBounds = sfSprite_getGlobalBounds(button->menu);
+
+    if (game->event.type == sfEvtMouseButtonPressed &&
+        game->event.mouseButton.button == sfMouseLeft &&
+        sfFloatRect_contains(&spriteBounds,
+        game->event.mouseButton.x, game->event.mouseButton.y))
+            *menubutton_clicked = 1;
+    return *menubutton_clicked;
+}
+
+void click_menu(game_t *game, mouse_t *mouse, button_t *button)
+{
+    sfTexture *clickedTexture =
+    sfTexture_createFromFile("graphics/clicked_menubutton.png", NULL);
+
+    animate_menubutton(game, mouse, button);
+    sfTexture_destroy(clickedTexture);
+}

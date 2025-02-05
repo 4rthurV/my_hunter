@@ -14,6 +14,8 @@ static void process_events(game_t *game)
             sfRenderWindow_close(game->window);
         if (sfKeyboard_isKeyPressed(sfKeyEscape))
             sfRenderWindow_close(game->window);
+        if (game->state == 2)
+            sfRenderWindow_close(game->window);
     }
 }
 
