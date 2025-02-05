@@ -34,15 +34,15 @@ void reset_sprite(sprite_t *sprite, int *clicked, float *y_pos)
 void accel(game_t *game, float *speed)
 {
     if (game->count_hits >= 0 && game->count_hits < 5)
-        *speed += 0.3;
+        *speed += 0.1;
     if (game->count_hits >= 5 && game->count_hits < 10)
-        *speed += 0.6;
+        *speed += 0.3;
     if (game->count_hits >= 10 && game->count_hits < 15)
-        *speed += 0.9;
+        *speed += 0.5;
     if (game->count_hits >= 15 && game->count_hits < 20)
-        *speed += 1.2;
+        *speed += 0.7;
     if (game->count_hits >= 20)
-        *speed += 1.5;
+        *speed += 0.9;
 }
 
 int game_over(game_t *game, float *speed)

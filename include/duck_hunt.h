@@ -111,6 +111,8 @@ void from_play_to_menu(game_t *game, sprite_t *sprite,
     mouse_t *mouse, button_t *button);
 void process_events(game_t *game);
 void clean(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button);
+void free_all(game_t *game, sprite_t *sprite,
+    mouse_t *mouse, button_t *button);
 int my_strcmp(char const *s1, char const *s2);
 int my_putstr(char const *str);
 void my_putchar(char c);

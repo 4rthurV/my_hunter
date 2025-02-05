@@ -118,8 +118,10 @@ int main(int argc, char **argv)
     mouse_t *mouse = malloc(sizeof(mouse_t));
     button_t *button = malloc(sizeof(button_t));
 
-    if (argc > 2)
+    if (argc > 2 || !game || !sprite || !mouse || !button) {
+        free_all(game, sprite, mouse, button);
         return 84;
+    }
     if (argc == 2) {
         if (my_strcmp(argv[1], "-h") == 0)
             help();

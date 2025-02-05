@@ -14,6 +14,10 @@ char *my_scorecat(game_t *game, char *scoretext)
     int len_score = my_strlen(score_str);
     char *result = malloc(len_scoretext + len_score + 1);
 
+    if (!score_str) {
+        free(score_str);
+        return NULL;
+    }
     for (int i = 0; i < len_scoretext; i++)
         result[i] = scoretext[i];
     for (int i = 0; i < len_score; i++)
@@ -36,6 +40,8 @@ char *int_to_str(int num)
         len++;
     }
     str = malloc(len + 1);
+    if (!str)
+        return NULL;
     str[len] = '\0';
     for (int i = len - 1; i >= 0; i--) {
         str[i] = (num % 10) + '0';
@@ -50,7 +56,7 @@ void display_score(game_t *game)
     char *final_score = my_scorecat(game, scoretext);
 
     sfText_setString(game->text, final_score);
-    sfText_setPosition(game->text, (sfVector2f){570.0, 705.0});
+    sfText_setPosition(game->text, (sfVector2f){620.0, 705.0});
     sfText_setScale(game->text, (sfVector2f){0.6f, 0.6f});
     sfText_setLetterSpacing(game->text, 1.4);
     sfText_setOutlineThickness(game->text, 1.1);
@@ -60,7 +66,7 @@ void display_score(game_t *game)
 
 void get_score(game_t *game)
 {
-    game->font = sfFont_createFromFile("graphics/mariokart_wii.ttf");
+    game->font = sfFont_createFromFile("graphics/MarioKart.ttf");
     game->text = sfText_create();
     sfText_setFont(game->text, game->font);
     sfText_setCharacterSize(game->text, 50);
