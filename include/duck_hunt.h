@@ -15,6 +15,7 @@
     #include <stdio.h>
     #include <unistd.h>
     #include <time.h>
+    #include <string.h>
 
 typedef struct sound_s {
     sfMusic* music;
