@@ -16,6 +16,16 @@
     #include <unistd.h>
     #include <time.h>
 
+typedef struct sound_s {
+    sfMusic* music;
+    sfMusic* loose;
+    sfMusic* coin;
+    sfMusic* koopa;
+    sfMusic* OneUp;
+    int sound_coin;
+    int game_over;
+} sound_t;
+
 typedef struct game_s {
     sfVideoMode mode;
     sfRenderWindow* window;
@@ -23,18 +33,13 @@ typedef struct game_s {
     sfSprite* image;
     sfEvent event;
     sfClock* clock;
-    sfMusic* music;
-    sfMusic* loose;
-    sfMusic* coin;
-    sfMusic* koopa;
-    sfMusic* OneUp;
+    sound_t *sound;
     int lifes;
     int state;
     int count_hits;
     int race_started;
-    int sound_coin;
-    int game_over;
 } game_t;
+
 typedef struct button_s {
     sfTexture* playbutton;
     sfSprite* play;
@@ -42,6 +47,7 @@ typedef struct button_s {
     sfSprite* menu;
     int menu_button_clicked;
 } button_t;
+
 typedef struct sprite_s {
     sfTexture* texture;
     sfSprite* sprite;
@@ -49,6 +55,7 @@ typedef struct sprite_s {
     sfTexture* one_ups;
     sfSprite* life_bar;
 } sprite_t;
+
 typedef struct mouse_s {
     sfTexture* target;
     sfSprite* mouse;
