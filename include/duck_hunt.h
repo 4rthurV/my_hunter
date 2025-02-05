@@ -25,11 +25,13 @@ typedef struct game_s {
     sfMusic* music;
     sfMusic* loose;
     sfMusic* coin;
-    int count_fails;
+    sfMusic* koopa;
+    int lifes;
     int state;
     int count_hits;
     int race_started;
     int sound_coin;
+    int game_over;
 } game_t;
 typedef struct button_s {
     sfTexture* playbutton;
@@ -42,6 +44,8 @@ typedef struct sprite_s {
     sfTexture* texture;
     sfSprite* sprite;
     sfVector2f sprite_position;
+    sfTexture* one_ups;
+    sfSprite* life_bar;
 } sprite_t;
 typedef struct mouse_s {
     sfTexture* target;
@@ -54,17 +58,17 @@ void get_mouse(game_t *game, mouse_t *mouse);
 void get_playbutton(button_t *button);
 void get_menubutton(button_t *button);
 void get_sounds(game_t *game);
-void check_music(game_t *game, button_t *button);
+void get_lifes(sprite_t *sprite);
+void one_ups(game_t *game, sprite_t *sprite);
+void check_music(game_t *game, sprite_t *sprite);
 void loop(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button);
 void animate_sprite(sprite_t *sprite);
 void animate_playbutton(game_t *game, mouse_t *mouse, button_t *button);
 void animate_menubutton(game_t *game, mouse_t *mouse, button_t *button);
-int update_pos(game_t *game, sprite_t *sprite,
-    button_t *button, float *speed);
+int update_pos(game_t *game, sprite_t *sprite, float *speed);
 void which_sprite(sprite_t *sprite, float *y_pos);
 void tracer(game_t *game, mouse_t *mouse);
-int sprite_isclicked(game_t *game, sprite_t *sprite,
-    button_t *button, int *clicked);
+int sprite_isclicked(game_t *game, sprite_t *sprite, int *clicked);
 int playbutton_isclicked(game_t *game, button_t *button,
     int *playbutton_clicked);
 int menubutton_isclicked(game_t *game, button_t *button,
@@ -85,5 +89,6 @@ void play_state(game_t *game, mouse_t *mouse,
     sprite_t *sprite, button_t *button);
 void from_play_to_menu(game_t *game, sprite_t *sprite,
     mouse_t *mouse, button_t *button);
+void process_events(game_t *game);
 void clean(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button);
 #endif

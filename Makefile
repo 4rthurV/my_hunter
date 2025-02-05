@@ -16,6 +16,8 @@ SRC	=	src/main.c \
 		src/animate.c \
 		src/sound.c \
 		src/quitbutton.c \
+		src/lifebar.c \
+		src/event.c \
 
 OBJ	=	$(SRC:.c=.o)
 
