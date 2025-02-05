@@ -21,10 +21,11 @@ typedef struct game_s {
     sfTexture* background;
     sfSprite* image;
     sfEvent event;
+    sfClock* clock;
+    sfMusic* music;
     int count_fails;
     int state;
     int count_hits;
-    sfClock* clock;
 } game_t;
 typedef struct button_s {
     sfTexture* playbutton;
