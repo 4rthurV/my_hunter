@@ -118,4 +118,5 @@ int my_strcmp(char const *s1, char const *s2);
 int my_putstr(char const *str);
 void my_putchar(char c);
 int my_strlen(char const *str);
+int is_a_tty(char *env[]);
 #endif

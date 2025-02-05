@@ -111,25 +111,14 @@ static int my_hunter(game_t *game, sprite_t *sprite,
     return 0;
 }
 
-int is_a_tty(char *env[])
-{
-    for (int i = 0; env[i]; i++) {
-        if (strcmp(env[i], "XDG_SESSION_TYPE=tty") == 0)
-            return 1;
-    }
-    return 0;
-}
-
 int main(int argc, char **argv, char *env[])
 {
-    if (is_a_tty(env))
-        return 84;
     game_t *game = malloc(sizeof(game_t));
     sprite_t *sprite = malloc(sizeof(sprite_t));
     mouse_t *mouse = malloc(sizeof(mouse_t));
     button_t *button = malloc(sizeof(button_t));
 
-    if (argc > 2 || !game || !sprite || !mouse || !button) {
+    if (argc > 2 || !game || !sprite || !mouse || !button || is_a_tty(env)) {
         free_all(game, sprite, mouse, button);
         return 84;
     }
