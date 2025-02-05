@@ -38,7 +38,6 @@ typedef struct mouse_s {
 } mouse_t;
 
 void get_window(game_t *game);
-void get_background(game_t *game);
 void get_sprite(sprite_t *sprite);
 void get_mouse(game_t *game, mouse_t *mouse);
 void get_playbutton(button_t *button);

@@ -85,7 +85,6 @@ int main(void)
         free(game);
         return 84;
     }
-    get_background(game);
     get_sprite(sprite);
     get_mouse(game, mouse);
     get_playbutton(button);
