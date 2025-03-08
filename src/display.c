@@ -62,6 +62,7 @@ int display_game(game_t *game, mouse_t *mouse,
     sfSprite_setScale(game->image, (sfVector2f){8.0f, 8.0f});
     sfRenderWindow_drawSprite(game->window, game->image, NULL);
     sfRenderWindow_drawSprite(game->window, sprite->sprite, NULL);
+    sfRenderWindow_drawSprite(game->window, sprite->life_bar, NULL);
     sfRenderWindow_drawSprite(game->window, button->menu, NULL);
     sfRenderWindow_drawSprite(game->window, mouse->mouse, NULL);
     sfRenderWindow_display(game->window);

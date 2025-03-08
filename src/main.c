@@ -7,25 +7,24 @@
 
 #include "../include/duck_hunt.h"
 
-static void process_events(game_t *game)
+static void restart_data(game_t *game, sprite_t *sprite)
 {
-    while (sfRenderWindow_pollEvent(game->window, &game->event)) {
-        if (game->event.type == sfEvtClosed)
-            sfRenderWindow_close(game->window);
-        if (sfKeyboard_isKeyPressed(sfKeyEscape))
-            sfRenderWindow_close(game->window);
-        if (game->state == 2)
-            sfRenderWindow_close(game->window);
-    }
+    game->state = 0;
+    game->sound_coin = 1;
+    game->lifes = 3;
+    sprite->one_ups =
+        sfTexture_createFromFile("graphics/3_lifes.png", NULL);
+    sprite->life_bar = sfSprite_create();
 }
 
-void restart_loop(game_t *game, sprite_t *sprite,
+static void restart_loop(game_t *game, sprite_t *sprite,
     mouse_t *mouse, button_t *button)
 {
-    check_music(game, button);
-    game->state = 0;
-    game->count_fails = 0;
-    game->sound_coin = 1;
+    check_music(game, sprite);
+    sfSprite_destroy(sprite->life_bar);
+    sfTexture_destroy(sprite->one_ups);
+    restart_data(game, sprite);
+    get_lifes(sprite);
     loop(game, sprite, mouse, button);
 }
 
@@ -37,23 +36,29 @@ void loop(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button)
         process_events(game);
         tracer(game, mouse);
         if (game->state == 0) {
-            check_music(game, button);
+            check_music(game, sprite);
             menu_state(game, mouse, sprite, button);
         }
         if (game->state == 1) {
-            check_music(game, button);
+            check_music(game, sprite);
             play_state(game, mouse, sprite, button);
         }
-        if (update_pos(game, sprite, button, &speed) == 0)
+        if (update_pos(game, sprite, &speed) == 0)
             break;
     }
-    if (update_pos(game, sprite, button, &speed) == 0)
+    if (update_pos(game, sprite, &speed) == 0) {
+        game->game_over = 1;
         restart_loop(game, sprite, mouse, button);
+    }
 }
 
 void get_all(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button)
 {
     get_sprite(sprite);
+    sprite->one_ups =
+        sfTexture_createFromFile("graphics/3_lifes.png", NULL);
+    sprite->life_bar = sfSprite_create();
+    get_lifes(sprite);
     get_mouse(game, mouse);
     get_playbutton(button);
     get_menubutton(button);
@@ -63,7 +68,8 @@ void get_all(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button)
 void set(game_t *game, button_t *button)
 {
     game->state = 0;
-    game->count_fails = 0;
+    game->game_over = 0;
+    game->lifes = 3;
     game->race_started = 0;
     game->sound_coin = 0;
     button->menu_button_clicked = 0;

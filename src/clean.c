@@ -20,6 +20,8 @@ void clean(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button)
     sfSprite_destroy(button->menu);
     sfTexture_destroy(button->menubutton);
     sfSprite_destroy(game->image);
+    sfSprite_destroy(sprite->life_bar);
+    sfTexture_destroy(sprite->one_ups);
     sfTexture_destroy(game->background);
     sfClock_destroy(game->clock);
     sfRenderWindow_destroy(game->window);
