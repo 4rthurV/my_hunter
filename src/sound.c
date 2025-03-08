@@ -17,6 +17,15 @@ void get_sounds(game_t *game)
 
 void check_music(game_t *game, button_t *button)
 {
+    if (game->sound_coin == 1) {
+        if (sfMusic_getStatus(game->music) != sfPlaying) {
+            sfMusic_play(game->coin);
+        } else {
+            sfMusic_stop(game->coin);
+            sfMusic_play(game->coin);
+        }
+        game->sound_coin = 0;
+    }
     if (game->state == 0) {
         if (sfMusic_getStatus(game->music) == sfPlaying &&
             button->menu_button_clicked != 1) {

@@ -25,7 +25,14 @@ void which_sprite(sprite_t *sprite, float *y_pos)
     sfSprite_setTextureRect(sprite->sprite, rect);
 }
 
-int update_pos(game_t *game, sprite_t *sprite, float *speed)
+void reset_sprite(sprite_t *sprite, int *clicked, float *speed, float *y_pos)
+{
+    *clicked = 0;
+    *speed += 0.3;
+    which_sprite(sprite, y_pos);
+}
+
+int update_pos(game_t *game, sprite_t *sprite, button_t *button, float *speed)
 {
     int y_max = 0;
     int y_min = 800;
@@ -35,16 +42,15 @@ int update_pos(game_t *game, sprite_t *sprite, float *speed)
     srand(time(0));
     y_pos = y_max + rand() % (y_min - y_max + 1);
     sprite->sprite_position.x += *speed;
-    clicked = sprite_isclicked(game, sprite, &clicked);
+    clicked = sprite_isclicked(game, sprite, button, &clicked);
     if (sprite->sprite_position.x > 1920)
         game->count_fails += 1;
-    if (sprite->sprite_position.x > 1920 || clicked == 1) {
-        clicked = 0;
-        *speed += 0.3;
-        which_sprite(sprite, &y_pos);
-    }
-    if (game->count_fails == 3)
+    if (sprite->sprite_position.x > 1920 || clicked == 1)
+        reset_sprite(sprite, &clicked, speed, &y_pos);
+    if (game->count_fails == 3) {
+        *speed = 7.0f;
         return 0;
+    }
     sfSprite_setPosition(sprite->sprite, sprite->sprite_position);
     return 1;
 }

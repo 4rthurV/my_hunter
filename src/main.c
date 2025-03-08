@@ -25,6 +25,7 @@ void restart_loop(game_t *game, sprite_t *sprite,
     check_music(game, button);
     game->state = 0;
     game->count_fails = 0;
+    game->sound_coin = 1;
     loop(game, sprite, mouse, button);
 }
 
@@ -43,10 +44,10 @@ void loop(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button)
             check_music(game, button);
             play_state(game, mouse, sprite, button);
         }
-        if (update_pos(game, sprite, &speed) == 0)
+        if (update_pos(game, sprite, button, &speed) == 0)
             break;
     }
-    if (update_pos(game, sprite, &speed) == 0)
+    if (update_pos(game, sprite, button, &speed) == 0)
         restart_loop(game, sprite, mouse, button);
 }
 
@@ -57,6 +58,15 @@ void get_all(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button)
     get_playbutton(button);
     get_menubutton(button);
     get_sounds(game);
+}
+
+void set(game_t *game, button_t *button)
+{
+    game->state = 0;
+    game->count_fails = 0;
+    game->race_started = 0;
+    game->sound_coin = 0;
+    button->menu_button_clicked = 0;
 }
 
 int main(void)
@@ -73,10 +83,7 @@ int main(void)
         free(game);
         return 84;
     }
-    game->state = 0;
-    game->count_fails = 0;
-    game->race_started = 0;
-    button->menu_button_clicked = 0;
+    set(game, button);
     get_all(game, sprite, mouse, button);
     loop(game, sprite, mouse, button);
     clean(game, sprite, mouse, button);
