@@ -41,7 +41,6 @@ clean:
 	rm -f $(OBJ)
 
 fclean:
-	rm -f $(EXE_NAME)
 	rm -f src/*.o
 
 re:	fclean all
