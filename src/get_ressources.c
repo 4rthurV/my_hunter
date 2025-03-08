@@ -14,15 +14,6 @@ void get_window(game_t *game)
         sfResize | sfClose | sfFullscreen, NULL);
 }
 
-void get_background(game_t *game)
-{
-    game->background =
-        sfTexture_createFromFile("graphics/background_menu.png", NULL);
-    game->image = sfSprite_create();
-    sfSprite_setTexture(game->image, game->background, sfTrue);
-    sfSprite_setScale(game->image, (sfVector2f){0.01f, 0.01f});
-}
-
 void get_sprite(sprite_t *sprite)
 {
     sfIntRect rect = {0, 0, 321, 349};

@@ -13,7 +13,7 @@ int display_menu(game_t *game, mouse_t *mouse,
     sfFloatRect spriteBounds = sfSprite_getGlobalBounds(button->play);
 
     game->background =
-        sfTexture_createFromFile("graphics/background_menu.png", NULL);
+        sfTexture_createFromFile("graphics/starting_screen.png", NULL);
     game->image = sfSprite_create();
     sfSprite_setTexture(game->image, game->background, sfTrue);
     sfSprite_setScale(game->image, (sfVector2f){1.95f, 1.9f});
