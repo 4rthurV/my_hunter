@@ -5,7 +5,7 @@
 ** main.c
 */
 
-#include "../include/duck_hunt.h"
+#include "duck_hunt.h"
 
 void restart_data(game_t *game, sprite_t *sprite)
 {
