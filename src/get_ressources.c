@@ -12,6 +12,7 @@ void get_window(game_t *game)
     game->mode = (sfVideoMode){1920, 1080, 32};
     game->window = sfRenderWindow_create(game->mode, "SFML window",
         sfResize | sfClose | sfFullscreen, NULL);
+    sfRenderWindow_setFramerateLimit(game->window, 60);
     game->clock = sfClock_create();
 }
 
