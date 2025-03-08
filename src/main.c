@@ -19,24 +19,36 @@ static void process_events(game_t *game)
     }
 }
 
+void restart_loop(game_t *game, sprite_t *sprite,
+    mouse_t *mouse, button_t *button)
+{
+    sfMusic_stop(game->music);
+    game->state = 0;
+    game->count_fails = 0;
+    loop(game, sprite, mouse, button);
+}
+
 void loop(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button)
 {
     float speed = 7.0f;
 
-    game->state = 0;
-    game->count_fails = 0;
     while (sfRenderWindow_isOpen(game->window)) {
         process_events(game);
         tracer(game, mouse);
         if (game->state == 0) {
+            check_music(game);
             menu_state(game, mouse, sprite, button);
-        } else
-            play_state(game, mouse, sprite);
+        }
+        if (game->state == 1) {
+            check_music(game);
+            play_state(game, mouse, sprite, button);
+        }
         if (update_pos(game, sprite, &speed) == 0)
             break;
     }
-    if (update_pos(game, sprite, &speed) == 0)
-        loop(game, sprite, mouse, button);
+    if (update_pos(game, sprite, &speed) == 0) {
+        restart_loop(game, sprite, mouse, button);
+    }
 }
 
 void get_all(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button)
@@ -45,6 +57,7 @@ void get_all(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button)
     get_mouse(game, mouse);
     get_playbutton(button);
     get_menubutton(button);
+    get_sounds(game);
 }
 
 int main(void)
@@ -54,17 +67,17 @@ int main(void)
     mouse_t *mouse = malloc(sizeof(mouse_t));
     button_t *button = malloc(sizeof(button_t));
 
-    game->music = sfMusic_createFromFile("audios/CoconutMall 8bit.wav");
-    if (!game || !sprite || !mouse || !button || !game->music)
+    if (!game || !sprite || !mouse || !button)
         return 84;
-    sfMusic_setLoop(game->music, sfTrue);
     get_window(game);
     if (!game->window) {
         free(game);
         return 84;
     }
+    game->state = 0;
+    game->count_fails = 0;
+    game->race_started = 0;
     get_all(game, sprite, mouse, button);
-    sfMusic_play(game->music);
     loop(game, sprite, mouse, button);
     clean(game, sprite, mouse, button);
     return EXIT_SUCCESS;

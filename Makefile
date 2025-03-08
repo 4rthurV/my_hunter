@@ -14,12 +14,14 @@ SRC	=	src/main.c \
 		src/clean.c \
 		src/crosshair.c \
 		src/animate.c \
+		src/sound.c \
+		src/quitbutton.c \
 
 OBJ	=	$(SRC:.c=.o)
 
 EXE_NAME	=	my_hunter
 
-CFLAGS	+=	-Wall -Wextra
+CFLAGS	+=	-Wall -Wextra -g
 CSFMLFLAGS	=	-lcsfml-graphics -lcsfml-window -lcsfml-system -lcsfml-audio
 
 all:	$(EXE_NAME)

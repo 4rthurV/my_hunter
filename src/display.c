@@ -41,9 +41,19 @@ int display_menu(game_t *game, mouse_t *mouse,
     return 0;
 }
 
-void display_game(game_t *game, mouse_t *mouse,
-    sprite_t *sprite)
+void from_play_to_menu(game_t *game, sprite_t *sprite,
+    mouse_t *mouse, button_t *button)
 {
+    game->state = 0;
+    sfRenderWindow_clear(game->window, sfBlack);
+    display_menu(game, mouse, sprite, button);
+}
+
+int display_game(game_t *game, mouse_t *mouse,
+    sprite_t *sprite, button_t *button)
+{
+    int quitbutton_clicked = 0;
+
     sfRenderWindow_clear(game->window, sfBlack);
     game->background =
     sfTexture_createFromFile("graphics/background.png", NULL);
@@ -52,7 +62,13 @@ void display_game(game_t *game, mouse_t *mouse,
     sfSprite_setScale(game->image, (sfVector2f){8.0f, 8.0f});
     sfRenderWindow_drawSprite(game->window, game->image, NULL);
     sfRenderWindow_drawSprite(game->window, sprite->sprite, NULL);
+    sfRenderWindow_drawSprite(game->window, button->menu, NULL);
     sfRenderWindow_drawSprite(game->window, mouse->mouse, NULL);
     sfRenderWindow_display(game->window);
     sfRenderWindow_drawSprite(game->window, sprite->sprite, NULL);
+    if (quitbutton_isclicked(game, button, &quitbutton_clicked) == 1) {
+        from_play_to_menu(game, sprite, mouse, button);
+        return 1;
+    }
+    return 0;
 }

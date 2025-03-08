@@ -9,6 +9,8 @@
 
 void clean(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button)
 {
+    if (game->music)
+        sfMusic_destroy(game->music);
     sfSprite_destroy(sprite->sprite);
     sfTexture_destroy(sprite->texture);
     sfSprite_destroy(mouse->mouse);
@@ -20,7 +22,6 @@ void clean(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button)
     sfSprite_destroy(game->image);
     sfTexture_destroy(game->background);
     sfClock_destroy(game->clock);
-    sfMusic_destroy(game->music);
     sfRenderWindow_destroy(game->window);
     free(game);
     free(sprite);

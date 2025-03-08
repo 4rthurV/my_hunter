@@ -18,17 +18,20 @@ void menu_state(game_t *game, mouse_t *mouse,
         game->state = 2;
 }
 
-void play_state(game_t *game, mouse_t *mouse, sprite_t *sprite)
+void play_state(game_t *game, mouse_t *mouse,
+    sprite_t *sprite, button_t *button)
 {
     float animation_delay = 0.35;
     sfTime elapsed;
     float elapsed_seconds;
+    int quit_play = display_game(game, mouse, sprite, button);
 
-    display_game(game, mouse, sprite);
     elapsed = sfClock_getElapsedTime(game->clock);
     elapsed_seconds = sfTime_asSeconds(elapsed);
     if (elapsed_seconds > animation_delay) {
         animate_sprite(sprite);
         sfClock_restart(game->clock);
     }
+    if (quit_play == 1)
+        game->state = 0;
 }
