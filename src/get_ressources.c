@@ -12,17 +12,18 @@ void get_window(game_t *game)
     game->mode = (sfVideoMode){1920, 1080, 32};
     game->window = sfRenderWindow_create(game->mode, "SFML window",
         sfResize | sfClose | sfFullscreen, NULL);
+    game->clock = sfClock_create();
 }
 
 void get_sprite(sprite_t *sprite)
 {
     sfIntRect rect = {0, 0, 321, 349};
-    int y_max = 500;
-    int y_min = 1000;
+    int y_max = 800;
+    int y_min = 900;
     float y_pos = 0;
 
     srand(time(0));
-    y_pos = y_max + rand() % (y_min - y_max + 1);
+    y_pos = y_max + rand() % (y_min - y_max);
     sprite->texture =
         sfTexture_createFromFile("graphics/spritesheet_mario.png", NULL);
     sprite->sprite = sfSprite_create();
@@ -48,6 +49,6 @@ void get_playbutton(button_t *button)
     button->button = sfTexture_createFromFile("graphics/playbutton.png", NULL);
     button->play = sfSprite_create();
     sfSprite_setTexture(button->play, button->button, sfTrue);
-    sfSprite_setScale(button->play, (sfVector2f){0.45f, 0.45f});
-    sfSprite_setPosition(button->play, (sfVector2f){790.0f, 600.0f});
+    sfSprite_setScale(button->play, (sfVector2f){2.4f, 2.4f});
+    sfSprite_setPosition(button->play, (sfVector2f){833.0f, 590.0f});
 }

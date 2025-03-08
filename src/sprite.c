@@ -27,7 +27,7 @@ int update_pos(game_t *game, sprite_t *sprite, float *speed)
     srand(time(0));
     y_pos = y_max + rand() % (y_min - y_max + 1);
     sprite->sprite_position.x += *speed;
-    clicked = mouse_isclicked(game, sprite, &clicked);
+    clicked = sprite_isclicked(game, sprite, &clicked);
     if (sprite->sprite_position.x > 1920)
         game->count_fails += 1;
     if (sprite->sprite_position.x > 1920 || clicked == 1) {
