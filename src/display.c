@@ -12,7 +12,7 @@ void draw_menu(game_t *game, mouse_t *mouse, button_t *button)
     sfRenderWindow_clear(game->window, sfBlack);
     sfRenderWindow_drawSprite(game->window, game->image, NULL);
     if (game->final_score == 1) {
-        sfText_setPosition(game->text, (sfVector2f){595.0, 480.0});
+        sfText_setPosition(game->text, (sfVector2f){620.0, 480.0});
         sfText_setColor(game->text, sfWhite);
         sfRenderWindow_drawText(game->window, game->text, NULL);
     }
