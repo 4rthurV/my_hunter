@@ -17,46 +17,66 @@ static void process_events(game_t *game)
     }
 }
 
-void tracer(game_t *game)
+void clean(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button)
 {
-    sfVector2i mousePosition = sfMouse_getPositionRenderWindow(game->window);
-
-    sfSprite_setPosition(game->mouse, (sfVector2f)
-        {mousePosition.x - (sfSprite_getGlobalBounds(game->mouse).width / 2),
-        mousePosition.y - (sfSprite_getGlobalBounds(game->mouse).height / 2)});
-}
-
-void display_all(game_t *game)
-{
-    sfRenderWindow_drawSprite(game->window, game->image, NULL);
-    sfRenderWindow_drawSprite(game->window, game->sprite, NULL);
-    sfRenderWindow_drawSprite(game->window, game->mouse, NULL);
-    sfRenderWindow_display(game->window);
-}
-
-void clean(game_t *game)
-{
-    sfSprite_destroy(game->sprite);
-    sfTexture_destroy(game->texture);
-    sfSprite_destroy(game->mouse);
-    sfTexture_destroy(game->target);
+    sfSprite_destroy(sprite->sprite);
+    sfTexture_destroy(sprite->texture);
+    sfSprite_destroy(mouse->mouse);
+    sfTexture_destroy(mouse->target);
     sfSprite_destroy(game->image);
     sfTexture_destroy(game->background);
     sfRenderWindow_destroy(game->window);
+    free(game);
+    free(sprite);
+    free(mouse);
+    free(button);
 }
 
-void loop(game_t *game)
+void menu_state(game_t *game, mouse_t *mouse,
+    sprite_t *sprite, button_t *button)
 {
+    display_menu(game, mouse, sprite, button);
+    if (display_menu(game, mouse, sprite, button) == 1)
+        game->state = 1;
+}
+
+void play_state(game_t *game, mouse_t *mouse, sprite_t *sprite, int *frame)
+{
+    int animation_framerate = 10;
+
+    display_game(game, mouse, sprite);
+    if (*frame == 0)
+        animate_sprite(sprite);
+    *frame = (*frame + 1) % animation_framerate;
+}
+
+void loop(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button)
+{
+    int frame = 0;
+    float speed = 7.0f;
+
+    game->state = 0;
+    game->count_fails = 0;
     while (sfRenderWindow_isOpen(game->window)) {
         process_events(game);
-        tracer(game);
-        display_all(game);
+        tracer(game, mouse);
+        if (game->state == 0) {
+            menu_state(game, mouse, sprite, button);
+        } else
+            play_state(game, mouse, sprite, &frame);
+        if (update_pos(game, sprite, &speed) == 0)
+            break;
     }
+    if (update_pos(game, sprite, &speed) == 0)
+        loop(game, sprite, mouse, button);
 }
 
 int main(void)
 {
     game_t *game = malloc(sizeof(game_t));
+    sprite_t *sprite = malloc(sizeof(sprite_t));
+    mouse_t *mouse = malloc(sizeof(mouse_t));
+    button_t *button = malloc(sizeof(mouse_t));
 
     if (!game)
         return 84;
@@ -66,10 +86,10 @@ int main(void)
         return 84;
     }
     get_background(game);
-    get_sprite(game);
-    get_mouse(game);
-    loop(game);
-    clean(game);
-    free(game);
+    get_sprite(sprite);
+    get_mouse(game, mouse);
+    get_playbutton(button);
+    loop(game, sprite, mouse, button);
+    clean(game, sprite, mouse, button);
     return EXIT_SUCCESS;
 }
