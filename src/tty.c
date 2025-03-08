@@ -10,7 +10,7 @@
 int is_a_tty(char *env[])
 {
     for (int i = 0; env[i]; i++) {
-        if (my_strcmp(env[i], "DISPLAY=") == 0)
+        if (my_strncmp(env[i], "DISPLAY=", 8) == 0)
             return 1;
     }
     return 0;
