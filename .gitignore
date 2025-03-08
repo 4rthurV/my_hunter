@@ -1,6 +1,5 @@
 *.o
 *~
-*.png
 run
 *.json
 .vscode/
