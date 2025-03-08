@@ -25,11 +25,33 @@ void which_sprite(sprite_t *sprite, float *y_pos)
     sfSprite_setTextureRect(sprite->sprite, rect);
 }
 
-void reset_sprite(sprite_t *sprite, int *clicked, float *speed, float *y_pos)
+void reset_sprite(sprite_t *sprite, int *clicked, float *y_pos)
 {
     *clicked = 0;
-    *speed += 0.3;
     which_sprite(sprite, y_pos);
+}
+
+void accel(game_t *game, float *speed)
+{
+    if (game->count_hits >= 0 && game->count_hits < 5)
+        *speed += 0.3;
+    if (game->count_hits >= 5 && game->count_hits < 10)
+        *speed += 0.6;
+    if (game->count_hits >= 10 && game->count_hits < 15)
+        *speed += 0.9;
+    if (game->count_hits >= 15 && game->count_hits < 20)
+        *speed += 1.2;
+    if (game->count_hits >= 20)
+        *speed += 1.5;
+}
+
+int game_over(game_t *game, float *speed)
+{
+    if (game->lifes == 0) {
+        *speed = 7.0f;
+        return 0;
+    }
+    return 1;
 }
 
 int update_pos(game_t *game, sprite_t *sprite, float *speed)
@@ -45,12 +67,11 @@ int update_pos(game_t *game, sprite_t *sprite, float *speed)
     clicked = sprite_isclicked(game, sprite, &clicked);
     if (sprite->sprite_position.x > 1920)
         one_ups(game, sprite);
-    if (sprite->sprite_position.x > 1920 || clicked == 1)
-        reset_sprite(sprite, &clicked, speed, &y_pos);
-    if (game->lifes == 0) {
-        *speed = 7.0f;
-        return 0;
+    if (sprite->sprite_position.x > 1920 || clicked == 1) {
+        reset_sprite(sprite, &clicked, &y_pos);
+        accel(game, speed);
     }
     sfSprite_setPosition(sprite->sprite, sprite->sprite_position);
+    return game_over(game, speed);
     return 1;
 }
