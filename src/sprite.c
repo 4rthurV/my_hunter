@@ -48,6 +48,7 @@ void accel(game_t *game, float *speed)
 int game_over(game_t *game, float *speed)
 {
     if (game->lifes == 0) {
+        game->final_score = 1;
         *speed = 7.0f;
         return 0;
     }
@@ -56,7 +57,7 @@ int game_over(game_t *game, float *speed)
 
 int update_pos(game_t *game, sprite_t *sprite, float *speed)
 {
-    int y_max = 0;
+    int y_max = 100;
     int y_min = 800;
     float y_pos = 0;
     int clicked = 0;

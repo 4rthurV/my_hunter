@@ -33,11 +33,14 @@ typedef struct game_s {
     sfSprite* image;
     sfEvent event;
     sfClock* clock;
+    sfText *text;
+    sfFont *font;
     sound_t *sound;
     int lifes;
     int state;
     int count_hits;
     int race_started;
+    int final_score;
 } game_t;
 
 typedef struct button_s {
@@ -68,6 +71,7 @@ void get_playbutton(button_t *button);
 void get_menubutton(button_t *button);
 void get_sounds(game_t *game);
 void get_lifes(sprite_t *sprite);
+void get_score(game_t *game);
 void one_up(game_t *game, sprite_t *sprite);
 void loose_OneUp(game_t *game);
 void check_music(game_t *game, sprite_t *sprite);
@@ -90,7 +94,12 @@ int display_menu(game_t *game, mouse_t *mouse,
     sprite_t *sprite, button_t *button);
 int display_game(game_t *game, mouse_t *mouse,
     sprite_t *sprite, button_t *button);
-void draw(game_t *game, mouse_t *mouse, button_t *button);
+void draw_menu(game_t *game, mouse_t *mouse, button_t *button);
+void draw_game(game_t *game, sprite_t *sprite,
+    mouse_t *mouse, button_t *button);
+void display_score(game_t *game);
+char *my_scorecat(game_t *game, char *scoretext);
+char *int_to_str(int num);
 void click_play(game_t *game, mouse_t *mouse, button_t *button);
 void click_menu(game_t *game, mouse_t *mouse, button_t *button);
 void click_quit(game_t *game, mouse_t *mouse, button_t *button);

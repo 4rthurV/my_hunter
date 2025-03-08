@@ -43,6 +43,8 @@ void clean(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button)
     clean_sounds(game);
     clean_sprites(game, sprite, mouse, button);
     clean_textures(game, sprite, mouse, button);
+    sfText_destroy(game->text);
+    sfFont_destroy(game->font);
     sfClock_destroy(game->clock);
     sfRenderWindow_destroy(game->window);
     free(game->sound);

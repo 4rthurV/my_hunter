@@ -22,6 +22,7 @@ SRC	=	src/main.c \
 		src/my_strcmp.c \
 		src/my_putchar.c \
 		src/my_strlen.c \
+		src/score.c \
 
 OBJ	=	$(SRC:.c=.o)
 
