@@ -89,7 +89,7 @@ static void help(void)
     my_putstr("    click again to close the window.\n");
 }
 
-static void my_hunter(game_t *game, sprite_t *sprite,
+static int my_hunter(game_t *game, sprite_t *sprite,
     mouse_t *mouse, button_t *button)
 {
     if (!game || !sprite || !mouse || !button)
@@ -103,6 +103,7 @@ static void my_hunter(game_t *game, sprite_t *sprite,
     get_all(game, sprite, mouse, button);
     loop(game, sprite, mouse, button);
     clean(game, sprite, mouse, button);
+    return 0;
 }
 
 int main(int argc, char **argv)

@@ -66,7 +66,7 @@ int update_pos(game_t *game, sprite_t *sprite, float *speed)
     sprite->sprite_position.x += *speed;
     clicked = sprite_isclicked(game, sprite, &clicked);
     if (sprite->sprite_position.x > 1920)
-        one_ups(game, sprite);
+        one_up(game, sprite);
     if (sprite->sprite_position.x > 1920 || clicked == 1) {
         reset_sprite(sprite, &clicked, &y_pos);
         accel(game, speed);
