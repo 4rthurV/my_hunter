@@ -10,6 +10,10 @@ SRC	=	src/main.c \
 		src/mouse.c \
 		src/sprite.c \
 		src/display.c \
+		src/game_state.c \
+		src/clean.c \
+		src/crosshair.c \
+		src/animate.c \
 
 OBJ	=	$(SRC:.c=.o)
 

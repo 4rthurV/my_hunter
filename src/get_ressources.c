@@ -46,9 +46,20 @@ void get_mouse(game_t *game, mouse_t *mouse)
 
 void get_playbutton(button_t *button)
 {
-    button->button = sfTexture_createFromFile("graphics/playbutton.png", NULL);
+    button->playbutton =
+        sfTexture_createFromFile("graphics/playbutton.png", NULL);
     button->play = sfSprite_create();
-    sfSprite_setTexture(button->play, button->button, sfTrue);
+    sfSprite_setTexture(button->play, button->playbutton, sfTrue);
     sfSprite_setScale(button->play, (sfVector2f){2.4f, 2.4f});
     sfSprite_setPosition(button->play, (sfVector2f){833.0f, 590.0f});
+}
+
+void get_menubutton(button_t *button)
+{
+    button->menubutton =
+        sfTexture_createFromFile("graphics/menubutton.png", NULL);
+    button->menu = sfSprite_create();
+    sfSprite_setTexture(button->menu, button->menubutton, sfTrue);
+    sfSprite_setScale(button->menu, (sfVector2f){1.75f, 1.75f});
+    sfSprite_setPosition(button->menu, (sfVector2f){1815.0f, 10.0f});
 }
