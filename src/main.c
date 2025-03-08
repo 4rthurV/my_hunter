@@ -39,6 +39,14 @@ void loop(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button)
         loop(game, sprite, mouse, button);
 }
 
+void get_all(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button)
+{
+    get_sprite(sprite);
+    get_mouse(game, mouse);
+    get_playbutton(button);
+    get_menubutton(button);
+}
+
 int main(void)
 {
     game_t *game = malloc(sizeof(game_t));
@@ -46,17 +54,17 @@ int main(void)
     mouse_t *mouse = malloc(sizeof(mouse_t));
     button_t *button = malloc(sizeof(button_t));
 
-    if (!game)
+    game->music = sfMusic_createFromFile("audios/CoconutMall.wav");
+    if (!game || !sprite || !mouse || !button || !game->music)
         return 84;
+    sfMusic_setLoop(game->music, sfTrue);
     get_window(game);
     if (!game->window) {
         free(game);
         return 84;
     }
-    get_sprite(sprite);
-    get_mouse(game, mouse);
-    get_playbutton(button);
-    get_menubutton(button);
+    get_all(game, sprite, mouse, button);
+    sfMusic_play(game->music);
     loop(game, sprite, mouse, button);
     clean(game, sprite, mouse, button);
     return EXIT_SUCCESS;
