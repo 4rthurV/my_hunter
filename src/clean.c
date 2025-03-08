@@ -9,11 +9,11 @@
 
 void clean_sounds(game_t *game)
 {
-    sfMusic_destroy(game->music);
-    sfMusic_destroy(game->coin);
-    sfMusic_destroy(game->loose);
-    sfMusic_destroy(game->OneUp);
-    sfMusic_destroy(game->koopa);
+    sfMusic_destroy(game->sound->music);
+    sfMusic_destroy(game->sound->coin);
+    sfMusic_destroy(game->sound->loose);
+    sfMusic_destroy(game->sound->OneUp);
+    sfMusic_destroy(game->sound->koopa);
 }
 
 void clean_sprites(game_t *game, sprite_t *sprite,
@@ -45,6 +45,7 @@ void clean(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button)
     clean_textures(game, sprite, mouse, button);
     sfClock_destroy(game->clock);
     sfRenderWindow_destroy(game->window);
+    free(game->sound);
     free(game);
     free(sprite);
     free(mouse);

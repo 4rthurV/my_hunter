@@ -10,7 +10,7 @@
 void restart_data(game_t *game, sprite_t *sprite)
 {
     game->state = 0;
-    game->sound_coin = 1;
+    game->sound->sound_coin = 1;
     game->lifes = 3;
     sprite->one_ups =
         sfTexture_createFromFile("graphics/3_lifes.png", NULL);
@@ -47,7 +47,7 @@ void loop(game_t *game, sprite_t *sprite, mouse_t *mouse, button_t *button)
             break;
     }
     if (update_pos(game, sprite, &speed) == 0) {
-        game->game_over = 1;
+        game->sound->game_over = 1;
         restart_loop(game, sprite, mouse, button);
     }
 }
@@ -69,11 +69,12 @@ static void get_all(game_t *game, sprite_t *sprite,
 void set(game_t *game, button_t *button)
 {
     game->state = 0;
-    game->game_over = 0;
     game->lifes = 3;
+    game->sound = malloc(sizeof(sound_t));
     game->race_started = 0;
-    game->sound_coin = 0;
+    game->sound->sound_coin = 0;
     game->count_hits = 0;
+    game->sound->game_over = 0;
     button->menu_button_clicked = 0;
 }
 

@@ -17,7 +17,7 @@ int sprite_isclicked(game_t *game, sprite_t *sprite, int *sprite_clicked)
         game->event.mouseButton.x, game->event.mouseButton.y)) {
             game->count_hits += 1;
             *sprite_clicked = 1;
-            game->sound_coin = 1;
+            game->sound->sound_coin = 1;
             check_music(game, sprite);
         }
     return *sprite_clicked;
