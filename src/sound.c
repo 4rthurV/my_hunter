@@ -15,21 +15,29 @@ void get_sounds(game_t *game)
     sfMusic_setVolume(game->coin, 35);
 }
 
-void check_music(game_t *game, button_t *button)
+void play_coin(game_t *game)
 {
     if (game->sound_coin == 1) {
-        if (sfMusic_getStatus(game->music) != sfPlaying) {
+        if (sfMusic_getStatus(game->music) != sfPlaying &&
+            sfMusic_getStatus(game->loose) != sfPlaying) {
             sfMusic_play(game->coin);
         } else {
             sfMusic_stop(game->coin);
+            sfMusic_stop(game->loose);
             sfMusic_play(game->coin);
         }
         game->sound_coin = 0;
     }
+}
+
+void check_music(game_t *game, button_t *button)
+{
+    play_coin(game);
     if (game->state == 0) {
         if (sfMusic_getStatus(game->music) == sfPlaying &&
             button->menu_button_clicked != 1) {
             sfMusic_stop(game->music);
+            sfMusic_stop(game->coin);
             sfMusic_play(game->loose);
         }
         if (sfMusic_getStatus(game->loose) != sfPlaying)
